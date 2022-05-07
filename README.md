@@ -42,9 +42,7 @@ nuget Install-Package Paytabs.DependencyInjection -Version 1.0.0
 
 ### Configuration Dependency Injection
 
-Configure the library in `Startup.cs` or `Program.cs` in case .net 6 with these helper methods. This will inject `IPaymobCashInBroker` (used to call
-the Paymob API),
-`IPaymobCashInAuthenticator` (used to authenticate and manage authentication token), and configure options.
+Configure the library in `Startup.cs` or `Program.cs` in case .net 6 with these helper methods.
 
 
 ```c#
@@ -84,9 +82,9 @@ public class TestPaymentService
         _paytabsTransaction = paytabsTransaction;
     }
 
-    public async Task<string> NewPayment()
+    public async Task<PaymentResponse> NewPayment(CancellationToken cancellationToken)
     {
-        PaymentRequest paymentRequest = new ()
+        PaymentRequest paymentRequest = new PaymentRequest()
         {
             TransactionType = TransactionType.SALE,
             TransactionClass= TransactionClass.ECOM,
@@ -113,9 +111,30 @@ public class TestPaymentService
             }*/
         };
 
-        return await _paytabsTransaction.CreatePayment(paymentRequest, cancellationToken);
-            
+        return await _paytabsTransaction.CreatePayment(paymentRequest, cancellationToken);     
     }
+
+
+    public async Task<QueryReferenceResponse> QueryPayment(CancellationToken cancellationToken)
+    {
+        QueryReferenceRequest request = new() { TransactionReference = "TST2212001212417" };
+        return await _paytabsTransaction.MakeInquire(request,cancellationToken);
+    }
+
+
+    public async Task<QueryTokenResponse> QueryPaymentByToken(CancellationToken cancellationToken)
+    {
+        QueryTokenRequest request = new() { Token = "2C4651BF67A3EC34C6B691F8638B75BC" };
+        return await _paytabsTransaction.MakeInquire(request, cancellationToken);
+    }
+
+
+    public async Task<DeleteTokenResponse> DeleteTokenPayment(CancellationToken cancellationToken)
+    {
+        DeleteTokenRequest request = new() { Token = "2C4651BF67A3EC34C6B691F8638B75BC" };
+        return await _paytabsTransaction.DeleteToken(request, cancellationToken);
+    }
+
 }
 ```
 
