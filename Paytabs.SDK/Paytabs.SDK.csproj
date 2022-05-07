@@ -1,12 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/MotazAli/Paytabs-SDK</RepositoryUrl>
+    <Copyright>Motaz Ali</Copyright>
+    <Description>SDK to help you integrate with Paytabs payment gateway.</Description>
+    <PackageTags>paytabs , sdk , payment , motaz , ali </PackageTags>
+    <Version>1.0.0</Version>
+    <PackageId />
+	  <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    <PackageReference Include="System.Text.Json" Version="6.0.3" />
+    <PackageReference Include="System.Text.Json" Version="6.0.3" /> 
   </ItemGroup>
+
+	<ItemGroup>
+		<None Include="LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+	</ItemGroup>
 
 </Project>
